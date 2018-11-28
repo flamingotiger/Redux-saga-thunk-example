@@ -1,0 +1,39 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    },
+    {
+      "id": 2,
+      "title": "React",
+      "author": "facebook"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    },
+    {
+      "id": 2,
+      "body": "Good queen music",
+      "postId":2
+    },
+    {
+      "id": 3,
+      "body": "Redux saga!",
+      "postId":3
+    },
+    {
+      "id": 4,
+      "body": "Redux very good",
+      "postId":3
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
