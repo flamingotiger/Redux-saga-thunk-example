@@ -1,28 +1,46 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux';
+import * as postActions from './reducers/postsReducers';
+import * as commentsActions from './reducers/commentsReducers';
 
 class App extends Component {
+  componentDidMount() {
+    //thunk
+    this.props.onListPosts();
+    //saga
+    this.props.onCommentsList();
+  }
   render() {
+    if (this.props.posts.isLoading) {
+      return <div>loading......</div>
+    }
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        {this.props.posts.posts.map((post, i) =>
+          <div key={i}>{post.title}</div>)}
+          
+        {this.props.comments.isLoading ?
+          (<div>Loading....</div>) :
+          (this.props.comments.comments.map((comment, i) =>
+            <div key={i}>
+              comments {comment.body}
+            </div>))
+        }
       </div>
     );
   }
 }
+const mapStateToProps = ({ posts, comments }) => ({ posts, comments })
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    onListPosts: () => {
+      dispatch(postActions.listPosts());
+    },
+    onCommentsList: () => {
+      dispatch(commentsActions.commentsListRequest());
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
